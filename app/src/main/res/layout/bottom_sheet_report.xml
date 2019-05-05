@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/report_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@color/colorPrimaryDark"
+    android:backgroundTint="@color/colorPrimaryDark">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="File Report"
+        android:textColor="@color/colorCardBackground"
+        android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_report_pictures"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:foregroundGravity="center"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="What kind of Issue?"
+        android:textColor="@color/colorCardBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_report_pictures" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cg_violation_chips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:checkedChip="@id/chip_other"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_potholes"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Potholes"
+            android:textColor="@drawable/text_color_chip"
+            app:chipBackgroundColor="@drawable/background_chip"
+            app:chipStrokeColor="@color/colorCardBackground"
+            app:chipStrokeWidth="1dp"
+            app:rippleColor="#80FFFFFF" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_child_labour"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Child Labour"
+            android:textColor="@drawable/text_color_chip"
+            app:chipBackgroundColor="@drawable/background_chip"
+            app:chipStrokeColor="@color/colorCardBackground"
+            app:chipStrokeWidth="1dp"
+            app:rippleColor="#80FFFFFF" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_broken_streetlight"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Broken Streetlight"
+            android:textColor="@drawable/text_color_chip"
+            app:chipBackgroundColor="@drawable/background_chip"
+            app:chipStrokeColor="@color/colorCardBackground"
+            app:chipStrokeWidth="1dp"
+            app:rippleColor="#80FFFFFF" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_enroachment"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Encroachment"
+            android:textColor="@drawable/text_color_chip"
+            app:chipBackgroundColor="@drawable/background_chip"
+            app:chipStrokeColor="@color/colorCardBackground"
+            app:chipStrokeWidth="1dp"
+            app:rippleColor="#80FFFFFF" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_open_sewers"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Open Sewers"
+            android:textColor="@drawable/text_color_chip"
+            app:chipBackgroundColor="@drawable/background_chip"
+            app:chipStrokeColor="@color/colorCardBackground"
+            app:chipStrokeWidth="1dp"
+            app:rippleColor="#80FFFFFF" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_other"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="Other"
+            android:textColor="@drawable/text_color_chip"
+            app:chipBackgroundColor="@drawable/background_chip"
+            app:chipStrokeColor="@color/colorCardBackground"
+            app:chipStrokeWidth="1dp"
+            app:rippleColor="#80FFFFFF" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:text="Tell us what you saw?"
+        android:textColor="@color/colorCardBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/el_other_violation" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/el_report_description"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Description"
+        android:textColorHint="@color/colorCardBackground"
+        app:boxCornerRadiusBottomStart="24dp"
+        app:boxCornerRadiusTopEnd="24dp"
+        app:boxStrokeColor="@color/colorCardBackground"
+        app:boxStrokeWidth="2dp"
+        app:errorEnabled="true"
+        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_report_submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintVertical_bias="0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:inputType="textMultiLine"
+            android:textColor="@color/colorCardBackground"
+            android:textCursorDrawable="@null" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/el_other_violation"
+        android:visibility="visible"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Issue Type"
+        android:textColorHint="@color/colorCardBackground"
+        app:boxCornerRadiusBottomStart="24dp"
+        app:boxCornerRadiusTopEnd="24dp"
+        app:boxStrokeColor="@color/colorCardBackground"
+        app:boxStrokeWidth="2dp"
+        app:errorEnabled="true"
+        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cg_violation_chips">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:inputType="textMultiLine"
+            android:textColor="@color/colorCardBackground"
+            android:textCursorDrawable="@null" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_report_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="48dp"
+        android:background="@color/colorCardBackground"
+        android:backgroundTint="@color/colorCardBackground"
+        android:text="Done"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/el_report_description"
+        app:strokeColor="@color/colorCardBackground"
+        app:strokeWidth="2dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

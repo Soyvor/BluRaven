@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#587AFF</color>
+    <color name="colorPrimaryDark">#EFEFEF</color>
+    <color name="colorPrimary">#587AFF</color>
+    <color name="colorCardBackground">#44238B</color>
+    <color name="colorUnselected">#DCDCDC</color>
+    <color name="reportTypeBackground">#6A49B1</color>
+
+    <color name="colorSuccessSnackbar">#39C79D</color>
+    <color name="colorErrorSnackbar">#D93B38</color>
+
+</resources>
