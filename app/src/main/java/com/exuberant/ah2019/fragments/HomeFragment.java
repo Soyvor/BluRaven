@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.ethanhua.skeleton.Skeleton;
+import com.ethanhua.skeleton.SkeletonAdapter;
+import com.ethanhua.skeleton.SkeletonScreen;
 import com.exuberant.ah2019.R;
 import com.exuberant.ah2019.adapters.HomeFeedAdapter;
 import com.exuberant.ah2019.models.Report;
@@ -21,6 +24,7 @@ import com.exuberant.ah2019.models.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +50,7 @@ public class HomeFragment extends Fragment {
     private TextView localityTextView;
     private RecyclerView homeRecyclerView;
     private FirebaseFunctions mFunctions;
+    private SkeletonScreen skeletonScreen;
     private SharedPreferences sharedPreferences;
     private List<Report> filteredReports;
 
@@ -59,18 +64,29 @@ public class HomeFragment extends Fragment {
         final User user = gson.fromJson(userString, User.class);
         localityTextView.setText(user.getLocality());
         final String postalCode = sharedPreferences.getString("PostalCode", "");
-        mReportsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mReportsReference.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Report report = snapshot.getValue(Report.class);
-                    if (postalCode.equals(report.getPostalCode())) {
-                        filteredReports.add(report);
-                    }
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Report report = dataSnapshot.getValue(Report.class);
+                if (postalCode.equals(report.getPostalCode())){
+                    filteredReports.add(report);
+                    updateScreen(filteredReports, user);
                 }
-                HomeFeedAdapter adapter = new HomeFeedAdapter(filteredReports, user);
-                homeRecyclerView.setVisibility(View.VISIBLE);
-                homeRecyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override
@@ -78,7 +94,14 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
         return view;
+    }
+
+    private void updateScreen(List<Report> filteredReports, User user) {
+        HomeFeedAdapter adapter = new HomeFeedAdapter(filteredReports, user);
+        homeRecyclerView.setVisibility(View.VISIBLE);
+        homeRecyclerView.setAdapter(adapter);
     }
 
     void initialize(View view) {
@@ -89,6 +112,15 @@ public class HomeFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance();
         mReportsReference = mDatabase.getReference().child("reports");
         homeRecyclerView = view.findViewById(R.id.rv_home);
+        SkeletonAdapter skeletonAdapter = new SkeletonAdapter();
+        skeletonScreen = Skeleton.bind(homeRecyclerView)
+                .adapter(skeletonAdapter)
+                .shimmer(true)
+                .angle(20)
+                .duration(1200)
+                .load(R.layout.skeleton_item_history)
+                .count(10)
+                .show();
     }
 
     private Task<String> homeList(String postalCode) {
