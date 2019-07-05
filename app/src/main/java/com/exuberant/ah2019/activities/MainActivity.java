@@ -125,11 +125,16 @@ public class MainActivity extends AppCompatActivity {
                             try {
                                 addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
                                 String postalCode = addresses.get(0).getPostalCode();
+                                String addressLine = addresses.get(0).getAddressLine(0);
                                 savePostalCode(postalCode);
                                 final String reportId = mReportsReference.push().getKey();
                                 String userString = sharedPreferences.getString("User", "");
                                 Gson gson = new Gson();
                                 User user = gson.fromJson(userString, User.class);
+                                user.setPostalCode(postalCode);
+                                user.setLocality(addressLine);
+                                saveDetails(user);
+                                mUserReference.child(user.getUserId()).setValue(user);
                                 List<String> dateList = Utils.getCurrentTime();
                                 Report report = new Report(reportId, user.getUserId(), user.getDisplayName(),"",location.getLatitude(), location.getLongitude(), postalCode, reportType, "This is a sample Title", description, dateList.get(0), dateList.get(1), new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(), false);
                                 mReportsReference.child(reportId).setValue(report);
