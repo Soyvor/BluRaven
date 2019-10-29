@@ -19,22 +19,15 @@ import com.exuberant.bluraven.R;
 import com.exuberant.bluraven.adapters.HomeFeedAdapter;
 import com.exuberant.bluraven.models.Report;
 import com.exuberant.bluraven.models.User;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.functions.FirebaseFunctions;
-import com.google.firebase.functions.HttpsCallableResult;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -44,7 +37,6 @@ public class HomeFragment extends Fragment {
     private DatabaseReference mReportsReference;
     private TextView localityTextView;
     private RecyclerView homeRecyclerView;
-    private FirebaseFunctions mFunctions;
     private SkeletonScreen skeletonScreen;
     private SharedPreferences sharedPreferences;
     private List<Report> filteredReports;
@@ -59,11 +51,18 @@ public class HomeFragment extends Fragment {
         final User user = gson.fromJson(userString, User.class);
         localityTextView.setText(user.getLocality());
         final String postalCode = sharedPreferences.getString("PostalCode", "");
+        getLocalPosts(user, "110037");
+
+        return view;
+    }
+
+    private void getLocalPosts(final User user, final String postalCode) {
+
         mReportsReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Report report = dataSnapshot.getValue(Report.class);
-                if (postalCode.equals(report.getPostalCode())){
+                if (postalCode.equals(report.getPostalCode())) {
                     filteredReports.add(report);
                     updateScreen(filteredReports, user);
                 }
@@ -89,8 +88,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-        return view;
     }
 
     private void updateScreen(List<Report> filteredReports, User user) {
@@ -102,7 +99,6 @@ public class HomeFragment extends Fragment {
     void initialize(View view) {
         localityTextView = view.findViewById(R.id.tv_home_locality);
         filteredReports = new ArrayList<>();
-        mFunctions = FirebaseFunctions.getInstance();
         sharedPreferences = getActivity().getSharedPreferences("UserData", MODE_PRIVATE);
         mDatabase = FirebaseDatabase.getInstance();
         mReportsReference = mDatabase.getReference().child("reports");
@@ -118,23 +114,6 @@ public class HomeFragment extends Fragment {
                 .show();
     }
 
-    private Task<String> homeList(String postalCode) {
-        Map<String, String> data = new HashMap<>();
-        data.put("pin", postalCode);
-        return mFunctions
-                .getHttpsCallable("homeList")
-                .call(data)
-                .continueWith(new Continuation<HttpsCallableResult, String>() {
-                    @Override
-                    public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
-                        // This continuation runs on either success or failure, but if the task
-                        // has failed then getResult() will throw an Exception which will be
-                        // propagated down.
-                        String result = (String) task.getResult().getData();
-                        return result;
-                    }
-                });
-    }
 
 }
 
